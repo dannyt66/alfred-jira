@@ -2,7 +2,7 @@ pushd $(dirname "$0") > /dev/null
 repo="$(dirname "$PWD")"
 popd > /dev/null
 
-hash npm &> /dev/null && npm install || { 
+hash npm &> /dev/null && npm install || {
   echo
   echo "Error: npm is required to install this workflow."
   echo "https://docs.npmjs.com/getting-started/installing-node"
@@ -11,7 +11,7 @@ hash npm &> /dev/null && npm install || {
 }
 
 echo "Looking for Alfred Preferences..."
-paths=("$1" "$HOME/Dropbox" "$HOME/Library/Mobile Documents/com~apple~CloudDocs" "$HOME/Google Drive" "$HOME/Library/Application Support/Alfred 3" "$HOME/Library/Application Support/Alfred 2")
+paths=("$1" "$HOME/Dropbox" "$HOME/Library/Mobile Documents/com~apple~CloudDocs" "$HOME/Google Drive" "$HOME/Library/Application Support/Alfred" "$HOME/Library/Application Support/Alfred 3" "$HOME/Library/Application Support/Alfred 2")
 
 for i in "${paths[@]}"; do
   d=${i// /\ }
@@ -41,7 +41,7 @@ while true; do
     path="$(find $directory -path "*.alfredpreferences/workflows" 2>/dev/null)"
     if [[ -n "$path" ]]; then
       echo "Found preferences at: $(dirname "$path")"
-      break 
+      break
     else
       echo "Could not locate \"Alfred.alfredpreferences\" at \"$directory\""
       path=
@@ -51,12 +51,12 @@ done
 
 link="$path/_jira"
 if [[ -L "$link" ]]; then
-  echo "Workflow already installed at \"$link\"." 
+  echo "Workflow already installed at \"$link\"."
   echo "Re-install? Y/n"
   read res
   [[ "$res" != "Y" ]] && exit 0
   rm "$link"
-fi 
+fi
 
 if [[ -d "$link" ]]; then
   echo
